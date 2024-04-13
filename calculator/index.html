@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Calculator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <section class="my-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <h2>Simple Calculator</h2>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-xl-3">
+                    <div class="mb-3">
+                        <input type="text" name="f_num" id="f_num" class="form-control" placeholder="First number">
+                        <span id="f_num_error" class="text-danger d-block"></span>
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="mb-3">
+                        <input type="text" name="s_num" id="s_num" class="form-control" placeholder="Second number">
+                        <span id="s_num_error" class="text-danger d-block"></span>
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <select class="form-select" name="operator" id="operator">
+                        <option value="" selected disabled>Select operator</option>
+                        <option value="addition">Addition (+)</option>
+                        <option value="subtraction">Subtraction (-)</option>
+                        <option value="multiplication">Multiplication (*)</option>
+                        <option value="division">Division (/)</option>
+                    </select>
+                    <span id="operator_error" class="text-danger d-block"></span>
+                </div>
+                <div class="col-xl-3">
+                    <button type="button" class="btn btn-primary" id="calculate">Calculate</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12">
+                    <h4>Result: <span class="show_result" id="show_result_id">0</span></h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+    <script>
+        const firstNumberInput = document.getElementById('f_num');
+        const secondNumberInput = document.getElementById('s_num');
+        const operatorSelect = document.getElementById('operator');
+        const calculateBtn = document.getElementById('calculate');
+        const fNumError = document.getElementById('f_num_error');
+        const sNumError = document.getElementById('s_num_error');
+        const operatorError = document.getElementById('operator_error');
+        const showResult = document.getElementById('show_result_id');
+
+        calculateBtn.addEventListener('click', function () {
+            // Clear previous error messages
+            clearErrors();
+
+            // Retrieve input values
+            const firstNumberValue = parseFloat(firstNumberInput.value);
+            const secondNumberValue = parseFloat(secondNumberInput.value);
+            const operatorValue = operatorSelect.value;
+
+            // Validate first number
+            if (isNaN(firstNumberValue)) {
+                fNumError.innerText = 'Please enter a valid number.';
+                return;
+            }
+
+            // Validate second number
+            if (isNaN(secondNumberValue)) {
+                sNumError.innerText = 'Please enter a valid number.';
+                return;
+            }
+
+            // Validate operator selection
+            if (!operatorValue) {
+                operatorError.innerText = 'Please select an operator.';
+                return;
+            }
+
+            // Perform calculation based on operator
+            let result;
+            switch (operatorValue) {
+                case 'addition':
+                    result = firstNumberValue + secondNumberValue;
+                    break;
+                case 'subtraction':
+                    result = firstNumberValue - secondNumberValue;
+                    break;
+                case 'multiplication':
+                    result = firstNumberValue * secondNumberValue;
+                    break;
+                case 'division':
+                    if (secondNumberValue === 0) {
+                        sNumError.innerText = 'Cannot divide by zero.';
+                        return;
+                    }
+                    result = firstNumberValue / secondNumberValue;
+                    break;
+                default:
+                    operatorError.innerText = 'Invalid operator.';
+                    return;
+            }
+
+            // Display result
+            showResult.innerText = result;
+        });
+
+        function clearErrors() {
+            fNumError.innerText = '';
+            sNumError.innerText = '';
+            operatorError.innerText = '';
+        }
+
+    </script>
+
+</body>
+
+</html>
