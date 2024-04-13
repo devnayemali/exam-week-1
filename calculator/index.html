@@ -76,56 +76,73 @@
             const secondNumberValue = parseFloat(secondNumberInput.value);
             const operatorValue = operatorSelect.value;
 
+            // set error message 
+            setErrorMsg(firstNumberValue, secondNumberValue, operatorValue);
+
+            // Perform calculation based on operator
+            calculateFun(operatorValue, firstNumberValue, secondNumberValue)
+
+        });
+
+        // clear all error message 
+        function clearErrors() {
+            fNumError.innerText = '';
+            sNumError.innerText = '';
+            operatorError.innerText = '';
+        }
+
+        // set all error message 
+        function setErrorMsg(firstNumberValue, secondNumberValue, operatorValue) {
+
             // Validate first number
             if (isNaN(firstNumberValue)) {
                 fNumError.innerText = 'Please enter a valid number.';
-                return;
             }
 
             // Validate second number
             if (isNaN(secondNumberValue)) {
                 sNumError.innerText = 'Please enter a valid number.';
-                return;
             }
 
             // Validate operator selection
             if (!operatorValue) {
                 operatorError.innerText = 'Please select an operator.';
+            }
+
+            if (isNaN(firstNumberValue) || isNaN(secondNumberValue) || !operatorValue) {
                 return;
             }
+        }
 
-            // Perform calculation based on operator
-            let result;
-            switch (operatorValue) {
-                case 'addition':
-                    result = firstNumberValue + secondNumberValue;
-                    break;
-                case 'subtraction':
-                    result = firstNumberValue - secondNumberValue;
-                    break;
-                case 'multiplication':
-                    result = firstNumberValue * secondNumberValue;
-                    break;
-                case 'division':
-                    if (secondNumberValue === 0) {
-                        sNumError.innerText = 'Cannot divide by zero.';
+        // calculate input 
+        function calculateFun(operatorValue, firstNumberValue, secondNumberValue) {
+            if (operatorValue && !isNaN(firstNumberValue) && !isNaN(secondNumberValue)) {
+                let result;
+                switch (operatorValue) {
+                    case 'addition':
+                        result = firstNumberValue + secondNumberValue;
+                        break;
+                    case 'subtraction':
+                        result = firstNumberValue - secondNumberValue;
+                        break;
+                    case 'multiplication':
+                        result = firstNumberValue * secondNumberValue;
+                        break;
+                    case 'division':
+                        if (secondNumberValue === 0) {
+                            sNumError.innerText = 'Cannot divide by zero.';
+                            return;
+                        }
+                        result = firstNumberValue / secondNumberValue;
+                        break;
+                    default:
+                        operatorError.innerText = 'Invalid operator.';
                         return;
-                    }
-                    result = firstNumberValue / secondNumberValue;
-                    break;
-                default:
-                    operatorError.innerText = 'Invalid operator.';
-                    return;
+                }
+
+                // Display result
+                showResult.innerText = result;
             }
-
-            // Display result
-            showResult.innerText = result;
-        });
-
-        function clearErrors() {
-            fNumError.innerText = '';
-            sNumError.innerText = '';
-            operatorError.innerText = '';
         }
 
     </script>
