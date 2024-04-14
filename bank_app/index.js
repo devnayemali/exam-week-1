@@ -52,5 +52,5 @@ account1.displayAccountInfo();
 
 console.log("\n----- Account 2 -----");
 account2.deposit(600);
-account2.withdraw(200);
+account2.withdraw(800);
 account2.displayAccountInfo();
