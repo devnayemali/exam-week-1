@@ -140,7 +140,9 @@
             }
 
             // Display result
-            showResult.innerText = result.toFixed();
+            if (!isNaN(result)){
+                showResult.innerText = result.toFixed();
+            }
         }
 
     </script>
